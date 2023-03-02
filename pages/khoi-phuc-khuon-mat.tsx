@@ -4,7 +4,6 @@ import Head from "next/head";
 import Image from "next/image";
 import { useState } from "react";
 import CountUp from "react-countup";
-import Chip from "../components/Chip";
 import { CompareSlider } from "../components/CompareSlider";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
@@ -39,23 +38,32 @@ const Home: NextPage = () => {
 
   async function generatePhoto(fileUrl: string) {
     setLoading(true);
-    const res = await fetch("https://xintao-gfpgan.hf.space/api/predict", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        data: [fileUrl, "v1.4", 2],
-      }),
-    });
+    try {
+      const res = await fetch("https://xintao-gfpgan.hf.space/api/predict", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          data: [fileUrl, "v1.4", 2],
+        }),
+      });
 
-    const {
-      data: [newPhoto],
-    }: ApiResponse = await res.json();
-    if (res.status !== 200) {
-      setError(newPhoto);
-    } else {
-      setRestoredImage(newPhoto);
+      const {
+        data: [newPhoto],
+      }: ApiResponse = await res.json();
+      if (res.status !== 200) {
+        setError(
+          "Hệ thống đang bảo trì, vui lòng tải lại trang hoặc thử lại sau ít phút."
+        );
+      } else {
+        setRestoredImage(newPhoto);
+      }
+    } catch (error) {
+      console.log(error);
+      setError(
+        "Đã có lỗi xảy ra, vui lòng tải lại trang hoặc thử lại sau ít phút."
+      );
     }
     setLoading(false);
   }
@@ -70,10 +78,6 @@ const Home: NextPage = () => {
       <Header />
       <main className="flex flex-1 w-full flex-col items-center justify-center text-center px-4 mt-4 sm:mt- sm:mb-0 mb-8">
         {/* <WatchTutorial /> */}
-        <Chip className="text-red-500">
-          Hệ thống hiện tại <span className="font-semibold">đang bảo trì</span>{" "}
-          và sẽ quay lại hoạt động sau vài ngày.
-        </Chip>
         <h1 className="mx-auto max-w-4xl font-display text-4xl font-bold tracking-normal text-slate-900 sm:text-6xl my-5">
           Khôi phục{" "}
           <span className="text-transparent bg-clip-text bg-gradient-to-br to-[#6A3DE8] from-[#536DFE]">
