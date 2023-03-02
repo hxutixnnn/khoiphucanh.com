@@ -19,6 +19,14 @@ const ratelimit = redis
     })
   : undefined;
 
+const replicateModel = {
+  // https://replicate.com/tencentarc/gfpgan
+  faceRestoration:
+    "9283608cc6b7be6b65a8e44983db012355fde4132009bf99d976b2f0896856a3",
+  removeScratches:
+    "c75db81db6cbd809d93cc3b7e7a088a351a3349c9fa02b6d393e35e0d51ba799",
+};
+
 export default async function handler(
   req: ExtendedNextApiRequest,
   res: NextApiResponse<Data>
@@ -33,7 +41,10 @@ export default async function handler(
     if (!result.success) {
       res
         .status(429)
-        .json("Too many uploads in 1 day. Please try again after 24 hours.");
+        // .json("Too many uploads in 1 day. Please try again after 24 hours.");
+        .json(
+          "Bạn đã tải lên quá nhiều ảnh trong 1 ngày. Vui lòng thử lại sau 24 giờ nữa nhé. Cảm ơn bạn đã ủng hộ."
+        );
       return;
     }
   }
@@ -47,8 +58,7 @@ export default async function handler(
       Authorization: "Token " + process.env.REPLICATE_API_KEY,
     },
     body: JSON.stringify({
-      version:
-        "9283608cc6b7be6b65a8e44983db012355fde4132009bf99d976b2f0896856a3",
+      version: replicateModel.faceRestoration,
       input: { img: imageUrl, version: "v1.4", scale: 2 },
     }),
   });
