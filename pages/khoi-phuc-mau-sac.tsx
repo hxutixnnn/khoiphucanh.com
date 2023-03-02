@@ -15,16 +15,9 @@ import appendNewToName from "../utils/appendNewToName";
 import getBase64 from "../utils/getBase64";
 
 interface ApiResponse {
-  data: [
-    string, // base64
-    {
-      name: string;
-      size: number;
-      data: string; // base64
-    }
-  ];
-  duration: number;
-  average_duration: number;
+  data: [string];
+  durations: [number];
+  avg_durations: [number];
 }
 
 const Home: NextPage = () => {
@@ -39,15 +32,18 @@ const Home: NextPage = () => {
   async function generatePhoto(fileUrl: string) {
     setLoading(true);
     try {
-      const res = await fetch("https://xintao-gfpgan.hf.space/api/predict", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          data: [fileUrl, "v1.4", 2],
-        }),
-      });
+      const res = await fetch(
+        "https://ecarbo-deoldify-demo.hf.space/api/predict/",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            data: [fileUrl],
+          }),
+        }
+      );
 
       const {
         data: [newPhoto],
@@ -71,7 +67,7 @@ const Home: NextPage = () => {
   return (
     <div className="flex max-w-6xl mx-auto flex-col items-center justify-center py-2 min-h-screen">
       <Head>
-        <title>Khôi phục khuôn mặt - khoiphucanh.com</title>
+        <title>Khôi phục màu sắc - khoiphucanh.com</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
@@ -81,9 +77,9 @@ const Home: NextPage = () => {
         <h1 className="mx-auto max-w-4xl font-display text-4xl font-bold tracking-normal text-slate-900 sm:text-6xl my-5">
           Khôi phục{" "}
           <span className="text-transparent bg-clip-text bg-gradient-to-br to-[#6A3DE8] from-[#536DFE]">
-            bất kỳ
+            màu sắc
           </span>{" "}
-          ảnh cũ nào
+          cho ảnh trắng đen
         </h1>
         {/* <PhotosGeneratedCountUp /> */}
         <ResizablePanel>
