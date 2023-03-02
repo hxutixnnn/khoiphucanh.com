@@ -18,7 +18,10 @@ class MyDocument extends Document {
             content="Khôi phục ảnh cũ chất lượng cao - khoiphucanh.com"
           />
 
-          <meta property="og:image" content="/og-image.png" />
+          <meta
+            property="og:image"
+            content="https://khoiphucanh.com/og-image.png"
+          />
           <meta
             name="viewport"
             content="width=device-width, initial-scale=1.0, maximum-scale=1.0,user-scalable=0"
@@ -42,7 +45,10 @@ class MyDocument extends Document {
             name="twitter:description"
             content="Công cụ khôi phục những hình ảnh bị mờ và lưu giữ lại những kỷ niệm với chất lượng tốt hơn. Hoàn toàn miễn phí - Khôi phục ảnh của bạn ngay hôm nay."
           />
-          <meta property="twitter:image" content="/og-image.png" />
+          <meta
+            property="twitter:image"
+            content="https://khoiphucanh.com/og-image.png"
+          />
           <link rel="icon" href="/favicon.ico" sizes="any" />
           <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
           {/* <link rel="manifest" href="/manifest.json" /> */}
