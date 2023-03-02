@@ -4,7 +4,6 @@ import Head from "next/head";
 import Image from "next/image";
 import { useState } from "react";
 import CountUp from "react-countup";
-import va from "@vercel/analytics";
 import { UploadDropzone } from "react-uploader";
 import { Uploader, UploadWidgetConfig } from "uploader";
 import { CompareSlider } from "../components/CompareSlider";
@@ -36,7 +35,7 @@ const options: UploadWidgetConfig = {
     try {
       isSafe = await NSFWPredictor.isSafeImg(file);
       // @ts-ignore
-      if (!isSafe) va.track("NSFW Image blocked");
+      // if (!isSafe) va.track("NSFW Image blocked");
     } catch (error) {
       console.error("NSFW predictor threw an error", error);
     }
