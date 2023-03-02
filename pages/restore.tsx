@@ -122,6 +122,7 @@ const Home: NextPage = () => {
               {!originalPhoto && <UploadDropZone />}
               {originalPhoto && !restoredImage && (
                 <Image
+                  unoptimized
                   alt="original photo"
                   src={originalPhoto}
                   className="rounded-2xl"
@@ -134,6 +135,7 @@ const Home: NextPage = () => {
                   <div>
                     <h2 className="mb-1 font-medium text-lg">Ảnh gốc</h2>
                     <Image
+                      unoptimized
                       alt="original photo"
                       src={originalPhoto}
                       className="rounded-2xl relative"
@@ -147,6 +149,7 @@ const Home: NextPage = () => {
                     </h2>
                     <a href={restoredImage} target="_blank" rel="noreferrer">
                       <Image
+                        unoptimized
                         alt="restored photo"
                         src={restoredImage}
                         className="rounded-2xl relative sm:mt-0 mt-2 cursor-zoom-in"
