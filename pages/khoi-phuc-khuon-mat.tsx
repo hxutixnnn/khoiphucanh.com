@@ -6,6 +6,7 @@ import { useState } from "react";
 import CountUp from "react-countup";
 import { UploadDropzone } from "react-uploader";
 import { Uploader, UploadWidgetConfig } from "uploader";
+import Chip from "../components/Chip";
 import { CompareSlider } from "../components/CompareSlider";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
@@ -14,7 +15,7 @@ import ResizablePanel from "../components/ResizablePanel";
 import Toggle from "../components/Toggle";
 import appendNewToName from "../utils/appendNewToName";
 import downloadPhoto from "../utils/downloadPhoto";
-import NSFWPredictor from "../utils/nsfwCheck";
+// import NSFWPredictor from "../utils/nsfwCheck";
 import myCustomLocale from "../utils/uploader.locale";
 
 // Configuration for the uploader
@@ -30,19 +31,19 @@ const options: UploadWidgetConfig = {
   editor: { images: { crop: false } },
   styles: { colors: { primary: "#000" } },
   locale: myCustomLocale,
-  onValidate: async (file: File): Promise<undefined | string> => {
-    let isSafe = false;
-    try {
-      isSafe = await NSFWPredictor.isSafeImg(file);
-      // @ts-ignore
-      // if (!isSafe) va.track("NSFW Image blocked");
-    } catch (error) {
-      console.error("NSFW predictor threw an error", error);
-    }
-    return isSafe
-      ? undefined
-      : "Detected a NSFW image which is not allowed. If this was a mistake, please contact me at hassan@hey.com";
-  },
+  // onValidate: async (file: File): Promise<undefined | string> => {
+  //   let isSafe = false;
+  //   try {
+  //     isSafe = await NSFWPredictor.isSafeImg(file);
+  //     // @ts-ignore
+  //     // if (!isSafe) va.track("NSFW Image blocked");
+  //   } catch (error) {
+  //     console.error("NSFW predictor threw an error", error);
+  //   }
+  //   return isSafe
+  //     ? undefined
+  //     : "Detected a NSFW image which is not allowed. If this was a mistake, please contact me at hassan@hey.com";
+  // },
 };
 
 const Home: NextPage = () => {
@@ -100,6 +101,10 @@ const Home: NextPage = () => {
       <Header />
       <main className="flex flex-1 w-full flex-col items-center justify-center text-center px-4 mt-4 sm:mt- sm:mb-0 mb-8">
         {/* <WatchTutorial /> */}
+        <Chip className="text-red-500">
+          Hệ thống hiện tại <span className="font-semibold">đang bảo trì</span>{" "}
+          và sẽ quay lại hoạt động sau vài ngày.
+        </Chip>
         <h1 className="mx-auto max-w-4xl font-display text-4xl font-bold tracking-normal text-slate-900 sm:text-6xl my-5">
           Khôi phục{" "}
           <span className="text-transparent bg-clip-text bg-gradient-to-br to-[#6A3DE8] from-[#536DFE]">
