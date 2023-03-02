@@ -4,4 +4,7 @@ module.exports = {
   images: {
     domains: ["upcdn.io", "replicate.delivery"],
   },
+  experimental: {
+    nextScriptWorkers: true,
+  },
 };
