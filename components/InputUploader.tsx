@@ -5,7 +5,7 @@ function InputUploader(props: HTMLAttributes<HTMLInputElement>) {
     <div className="flex items-center justify-center w-full max-w-xl">
       <label
         htmlFor="dropzone-file"
-        className="flex flex-col items-center justify-center w-full h-64 border-2 border-slate-300 border-dashed rounded-lg cursor-pointer bg-slate-50 dark:hover:bg-bray-800 dark:bg-slate-700 hover:bg-slate-100 dark:border-slate-600 dark:hover:border-slate-500 dark:hover:bg-slate-600"
+        className="flex flex-col items-center justify-center w-full h-64 border-2 border-slate-300 border-dashed rounded-lg cursor-pointer bg-slate-50"
       >
         <div className="flex flex-col items-center justify-center pt-5 pb-6">
           <svg
@@ -23,7 +23,7 @@ function InputUploader(props: HTMLAttributes<HTMLInputElement>) {
               d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
             ></path>
           </svg>
-          <div className="mb-2 text-slate-500 dark:text-slate-400">
+          <div className="mb-2 text-slate-500">
             <p className="text-xl font-light text-white bg-black px-6 py-4 rounded mb-6">
               Bấm để tải ảnh lên
             </p>

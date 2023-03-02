@@ -26,7 +26,7 @@ export default function Header() {
 function Navigation() {
   const router = useRouter();
   return (
-    <div className="flex flex-wrap items-center space-x-2 text-sm font-medium text-center text-gray-500 dark:text-gray-400">
+    <div className="flex flex-wrap items-center space-x-2 text-sm font-medium text-center text-gray-500">
       {[
         ["Khôi phục mặt", "/khoi-phuc-khuon-mat", ""],
         ["Khôi phục màu", "/khoi-phuc-mau-sac", "Mới"],
@@ -38,12 +38,12 @@ function Navigation() {
             "inline-block px-4 py-3 rounded-lg",
             router.asPath === navPath
               ? "text-white bg-gradient-to-br to-[#6A3DE8] from-[#536DFE]"
-              : "hover:text-gray-900 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-white",
+              : "hover:text-gray-900 hover:bg-gray-100",
           ])}
         >
           {navLabel}{" "}
           {badge && (
-            <span className="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800">
+            <span className="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded">
               {badge}
             </span>
           )}
