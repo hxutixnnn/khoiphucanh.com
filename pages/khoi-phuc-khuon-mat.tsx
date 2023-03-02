@@ -4,47 +4,17 @@ import Head from "next/head";
 import Image from "next/image";
 import { useState } from "react";
 import CountUp from "react-countup";
-import { UploadDropzone } from "react-uploader";
-import { Uploader, UploadWidgetConfig } from "uploader";
 import Chip from "../components/Chip";
 import { CompareSlider } from "../components/CompareSlider";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
+import InputUploader from "../components/InputUploader";
 import LoadingDots from "../components/LoadingDots";
 import ResizablePanel from "../components/ResizablePanel";
 import Toggle from "../components/Toggle";
 import appendNewToName from "../utils/appendNewToName";
 import downloadPhoto from "../utils/downloadPhoto";
-// import NSFWPredictor from "../utils/nsfwCheck";
-import myCustomLocale from "../utils/uploader.locale";
-
-// Configuration for the uploader
-const uploader = Uploader({
-  apiKey: !!process.env.NEXT_PUBLIC_UPLOAD_API_KEY
-    ? process.env.NEXT_PUBLIC_UPLOAD_API_KEY
-    : "free",
-});
-
-const options: UploadWidgetConfig = {
-  maxFileCount: 1,
-  mimeTypes: ["image/jpeg", "image/png", "image/jpg"],
-  editor: { images: { crop: false } },
-  styles: { colors: { primary: "#000" } },
-  locale: myCustomLocale,
-  // onValidate: async (file: File): Promise<undefined | string> => {
-  //   let isSafe = false;
-  //   try {
-  //     isSafe = await NSFWPredictor.isSafeImg(file);
-  //     // @ts-ignore
-  //     // if (!isSafe) va.track("NSFW Image blocked");
-  //   } catch (error) {
-  //     console.error("NSFW predictor threw an error", error);
-  //   }
-  //   return isSafe
-  //     ? undefined
-  //     : "Detected a NSFW image which is not allowed. If this was a mistake, please contact me at hassan@hey.com";
-  // },
-};
+import getBase64 from "../utils/getBase64";
 
 const Home: NextPage = () => {
   const [originalPhoto, setOriginalPhoto] = useState<string | null>(null);
@@ -54,22 +24,6 @@ const Home: NextPage = () => {
   const [sideBySide, setSideBySide] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [photoName, setPhotoName] = useState<string | null>(null);
-
-  const UploadDropZone = () => (
-    <UploadDropzone
-      uploader={uploader}
-      options={options}
-      onUpdate={(file) => {
-        if (file.length !== 0) {
-          setPhotoName(file[0].originalFile.originalFileName);
-          setOriginalPhoto(file[0].fileUrl.replace("raw", "thumbnail"));
-          generatePhoto(file[0].fileUrl.replace("raw", "thumbnail"));
-        }
-      }}
-      width="670px"
-      height="250px"
-    />
-  );
 
   async function generatePhoto(fileUrl: string) {
     await new Promise((resolve) => setTimeout(resolve, 500));
@@ -127,7 +81,26 @@ const Home: NextPage = () => {
                   restored={restoredImage!}
                 />
               )}
-              {!originalPhoto && <UploadDropZone />}
+              {!originalPhoto && (
+                <InputUploader
+                  onChange={async (event) => {
+                    if (!event.currentTarget.files?.length) return;
+                    try {
+                      const file = event.currentTarget.files[0];
+                      const imageBase64 = await getBase64(file);
+                      if (typeof imageBase64 === "string") {
+                        setPhotoName(file.name);
+                        setOriginalPhoto(imageBase64);
+                        await generatePhoto(imageBase64);
+                      } else {
+                        console.log({ imageBase64 });
+                      }
+                    } catch (error) {
+                      console.log(error);
+                    }
+                  }}
+                />
+              )}
               {originalPhoto && !restoredImage && (
                 <Image
                   unoptimized
