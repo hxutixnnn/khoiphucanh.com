@@ -13,8 +13,20 @@ import LoadingDots from "../components/LoadingDots";
 import ResizablePanel from "../components/ResizablePanel";
 import Toggle from "../components/Toggle";
 import appendNewToName from "../utils/appendNewToName";
-import downloadPhoto from "../utils/downloadPhoto";
 import getBase64 from "../utils/getBase64";
+
+interface ApiResponse {
+  data: [
+    string, // base64
+    {
+      name: string;
+      size: number;
+      data: string; // base64
+    }
+  ];
+  duration: number;
+  average_duration: number;
+}
 
 const Home: NextPage = () => {
   const [originalPhoto, setOriginalPhoto] = useState<string | null>(null);
@@ -26,17 +38,20 @@ const Home: NextPage = () => {
   const [photoName, setPhotoName] = useState<string | null>(null);
 
   async function generatePhoto(fileUrl: string) {
-    await new Promise((resolve) => setTimeout(resolve, 500));
     setLoading(true);
-    const res = await fetch("/api/generate", {
+    const res = await fetch("https://xintao-gfpgan.hf.space/api/predict", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ imageUrl: fileUrl }),
+      body: JSON.stringify({
+        data: [fileUrl, "v1.4", 2],
+      }),
     });
 
-    let newPhoto = await res.json();
+    const {
+      data: [newPhoto],
+    }: ApiResponse = await res.json();
     if (res.status !== 200) {
       setError(newPhoto);
     } else {
@@ -128,17 +143,15 @@ const Home: NextPage = () => {
                     <h2 className="mb-1 font-medium text-lg">
                       Ảnh đã khôi phục
                     </h2>
-                    <a href={restoredImage} target="_blank" rel="noreferrer">
-                      <Image
-                        unoptimized
-                        alt="restored photo"
-                        src={restoredImage}
-                        className="rounded-2xl relative sm:mt-0 mt-2 cursor-zoom-in"
-                        width={475}
-                        height={475}
-                        onLoadingComplete={() => setRestoredLoaded(true)}
-                      />
-                    </a>
+                    <Image
+                      unoptimized
+                      alt="restored photo"
+                      src={restoredImage}
+                      className="rounded-2xl relative sm:mt-0 mt-2"
+                      width={475}
+                      height={475}
+                      onLoadingComplete={() => setRestoredLoaded(true)}
+                    />
                   </div>
                 </div>
               )}
@@ -175,17 +188,13 @@ const Home: NextPage = () => {
                   </button>
                 )}
                 {restoredLoaded && (
-                  <button
-                    onClick={() => {
-                      downloadPhoto(
-                        restoredImage!,
-                        appendNewToName(photoName!)
-                      );
-                    }}
+                  <a
+                    href={restoredImage!}
+                    download={appendNewToName(photoName!)}
                     className="bg-white rounded-full text-black border font-medium px-4 py-2 mt-4 hover:bg-gray-100 transition"
                   >
                     Tải về ảnh đã khôi phục
-                  </button>
+                  </a>
                 )}
               </div>
             </motion.div>
