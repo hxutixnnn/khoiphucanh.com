@@ -69,7 +69,7 @@ export default async function handler(
       "Content-Type": "application/json",
       Authorization: "Token " + process.env.REPLICATE_API_KEY,
     },
-    body: JSON.stringify(replicateModel.faceRestoration({ img: imageUrl })),
+    body: JSON.stringify(replicateModel.removeScratches({ image: imageUrl })),
   });
 
   let jsonStartResponse = await startResponse.json();

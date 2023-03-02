@@ -98,17 +98,21 @@ const Home: NextPage = () => {
       </Head>
 
       <Header />
-      <main className="flex flex-1 w-full flex-col items-center justify-center text-center px-4 mt-4 sm:mb-0 mb-8">
+      <main className="flex flex-1 w-full flex-col items-center justify-center text-center px-4 mt-4 sm:mt- sm:mb-0 mb-8">
         {/* <WatchTutorial /> */}
-        <h1 className="mx-auto max-w-4xl font-display text-4xl font-bold tracking-normal text-slate-900 sm:text-6xl mb-5">
-          Khôi phục bất kỳ ảnh cũ nào
+        <h1 className="mx-auto max-w-4xl font-display text-4xl font-bold tracking-normal text-slate-900 sm:text-6xl my-5">
+          Khôi phục{" "}
+          <span className="text-transparent bg-clip-text bg-gradient-to-br to-[#6A3DE8] from-[#536DFE]">
+            bất kỳ
+          </span>{" "}
+          ảnh cũ nào
         </h1>
         {/* <PhotosGeneratedCountUp /> */}
         <ResizablePanel>
           <AnimatePresence exitBeforeEnter>
             <motion.div className="flex justify-between items-center w-full flex-col mt-4">
               <Toggle
-                className={`${restoredLoaded ? "visible" : "invisible"} mb-6`}
+                className={`${restoredLoaded ? "visible mb-6" : "invisible"}`}
                 sideBySide={sideBySide}
                 setSideBySide={(newVal) => setSideBySide(newVal)}
               />

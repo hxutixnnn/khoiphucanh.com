@@ -5,7 +5,6 @@ import Link from "next/link";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import SquigglyLines from "../components/SquigglyLines";
-import { Testimonials } from "../components/Testimonials";
 
 const Home: NextPage = () => {
   return (
@@ -19,9 +18,11 @@ const Home: NextPage = () => {
         {/* <UsedCounter /> */}
         <h1 className="mx-auto max-w-4xl font-display text-5xl font-bold tracking-normal text-slate-900 sm:text-7xl">
           Khôi phục ảnh cũ{" "}
-          <span className="relative whitespace-nowrap text-[#3290EE]">
+          <span className="relative whitespace-nowrap">
             <SquigglyLines />
-            <span className="relative">sử dụng AI</span>
+            <span className="relative text-transparent bg-clip-text bg-gradient-to-br to-[#6A3DE8] from-[#536DFE]">
+              sử dụng AI
+            </span>
           </span>{" "}
           miễn phí.
         </h1>
@@ -40,8 +41,8 @@ const Home: NextPage = () => {
           </a>
 
           <Link
-            className="bg-black rounded-xl text-white font-medium px-4 py-3 sm:mt-10 mt-8 hover:bg-black/80"
-            href="/restore"
+            className="bg-gradient-to-br to-[#6A3DE8] from-[#536DFE] rounded-xl text-white font-medium px-4 py-3 sm:mt-10 mt-8 hover:bg-indigo-700"
+            href="/khoi-phuc-khuon-mat"
           >
             Bắt đầu khôi phục ảnh
           </Link>

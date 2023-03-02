@@ -1,8 +1,5 @@
 import { Switch } from "@headlessui/react";
-
-function classNames(...classes: string[]) {
-  return classes.filter(Boolean).join(" ");
-}
+import clsx from "clsx";
 
 export interface ToggleProps extends React.HTMLAttributes<HTMLDivElement> {
   sideBySide: boolean;
@@ -27,14 +24,14 @@ export default function Toggle({
         <Switch
           checked={sideBySide}
           onChange={setSideBySide}
-          className={classNames(
+          className={clsx(
             sideBySide ? "bg-black" : "bg-gray-200",
             "relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none "
           )}
         >
           <span
             aria-hidden="true"
-            className={classNames(
+            className={clsx(
               sideBySide ? "translate-x-5" : "translate-x-0",
               "pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out"
             )}
