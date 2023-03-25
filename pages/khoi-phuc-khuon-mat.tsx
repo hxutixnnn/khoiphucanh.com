@@ -39,15 +39,18 @@ const Home: NextPage = () => {
   async function generatePhoto(fileUrl: string) {
     setLoading(true);
     try {
-      const res = await fetch("https://xintao-gfpgan.hf.space/api/predict", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          data: [fileUrl, "v1.4", 2],
-        }),
-      });
+      const res = await fetch(
+        "https://nightfury-image-face-upscale-restoration-g-c878a3a.hf.space/api/predict",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            data: [fileUrl, "v1.4", 2],
+          }),
+        }
+      );
 
       const {
         data: [newPhoto],
